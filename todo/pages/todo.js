@@ -136,7 +136,7 @@ const Todo = ( {avatar_url, login} ) => {
         </li>))
     }
 
-    return (<div className="h-screen bg-pink-300 border-2 flex flex-col items-center">
+    return (<div className="h-screen bg-blue-300 border-2 flex flex-col items-center">
         <h1 className="flex justify-center m-8 text-indigo-800 text-4xl drop-shadow-lg">
             <img src={avatar_url} width="80" />
             <div className="flex flex-row ml-3 pt-5 justify-center text-indigo-800 text-3xl drop-shadow-lg">
