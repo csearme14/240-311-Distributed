@@ -5,84 +5,163 @@ const Todo = ( {avatar_url, login} ) => {
     const initTasks = [
         { id: 1, name: "Read a book"}, /**element1 = item */
         { id: 2, name: "Do homework"}, /**element2 = item */
+        { id: 3, name: "Chalisa Sinban"},
     ];
 
     const [name, setName] = useState('');
-    const [idEdit,setIdEdit] = useState(0);
     const [tasks, setTasks] = useState(initTasks);
+    const [idEdit,setIdEdit] = useState(-1);
+    
     
     //add คือฟังก์ชัน
-    const add =() =>{
-        setTasks([ ...tasks,{id: tasks[tasks.length - 1].id + 1, name}]);
+    const addTask = () => {
+        console.log('add');
+        if (name == "")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == " ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "  ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "   ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "    ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "     ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "      ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "       ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "        ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "         ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "          ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "           ")
+            return alert("กรุณากรอกข้อมูล");    
+        if (name == "            ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "             ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "              ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "               ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                 ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "                  ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                   ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "                    ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                     ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                      ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                       ")
+            return alert("กรุณากรอกข้อมูล"); 
+        if (name == "                        ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                         ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "                          ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                           ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                            ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                             ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "                              ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                               ")
+            return alert("กรุณากรอกข้อมูล");        
+        if (name == "                                ")
+            return alert("กรุณากรอกข้อมูล");
+        if (name == "                                 ")
+            return alert("กรุณากรอกข้อมูล");
+        if (tasks.length == 0)
+            setTasks([{ id: 1, name }]);
+        if (tasks.length >= 10)
+            return alert("ข้อมูลเกิน 10 ครั้ง");
+        else
+            setTasks([...tasks, { id: tasks[tasks.length - 1].id + 1, name }])
+        console.log('new task: ', tasks);
     }
     // ฟังก์ชันลบ
-    const del = (id) =>{
-        console.log('Delete')
-        //item.id ไหนตรงกันจะ filter ตัวนั้นทิ้ง
-        const newTasks = tasks.filter((task)=>( +task.id !== +id)); // id=string +id=int
-        setTasks(newTasks); //หรือจะเขียน setTasks([...newTasks]); 
+    const deleteTask = (id) => {
+        console.log("Delete", id);
+        const newTasks = tasks.filter((item) => +item.id !== +id);
+        setTasks(newTasks);
     }
     //ฟังก์ชัน Edit
-    const editTask = (id) =>{
-        console.log("Edit" +id);
+    const editTask = (id) => {
         setIdEdit(id);
-        const t = tasks.find((task) => (+task.id === +id)) //หา tasks ใหม่
-        setName(t.name);
-        //ถ้ากด Edit ครั้งที่ 2 จะทำการบันทึกคำที่เปลี่ยน
-        if (+idEdit === +id){                              //เช็ค id เท่ากันไหม
-            const newTasks = tasks.map ((task) =>{
-                if(+task.id === +id)                       //เช็ค id เท่ากันไหม     
-                task.name = name;                          //เป็นการเก็บชื่อใหม่
+        const task = tasks.find(item => +item.id === +id)
+        setName(task.name);
+        if (+idEdit === +id) { // press edit again
+            // set new tasks
+            const newTasks = tasks.map((task, index) => {
+                if (+task.id === +id)
+                    task.name = name;
                 return task;
-            })
-            setTasks(newTasks);                            
-            setIdEdit(0);                                  
-        } 
+            });
+            setTasks(newTasks); // re-render
+            setIdEdit(0);       // re init idEdited
+        }
     }
 
-    const renderTasks = () =>{
-       return tasks.map( (item, index)=> {
-           return (<li className="relative mr-4 border-2 border-dashed p-8" key={index}>
-            <div className="text-3xl text-indigo-200 drop-shawdow-lg">
-            <div className="absolute text-xl mr-2 bottom-0 right-0">{item.id}</div>
-            {
-                (idEdit !== item.id)? item.name :
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+    const renderTask = () => {
+        console.log(idEdit)
+        return tasks.map((item, index) =>
+        (<li key={index} className="relative m-4 border-2 border-dashed p-8">
+            <div className="absolute bottom-0 right-0 text-xl mr-2 text-indigo-500">
+                {index + 1}
+            </div>
+            {+idEdit !== +item.id ?
+                <div className="text-3xl text-indigo-800 drop-shadow-lg drop-shadow-lg max-w-xs">{item.name}</div> :
+                <input className="text-3xl text-indigo-800" type="task"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                />
             }
-            </div>
-
             <div className="mt-8 flex justify-center">
-                <button className="drop-shawdow-lg mr-4 bg-red-200 hover:text-red-600 hover:bg-red-100 rounded-lg p-2" onClick={()=> del(item.id)}>Delete</button>
-                <button className="drop-shawdow-lg mr-4 bg-yellow-200 hover:text-orange-600 hover:bg-yellow-100 rounded-lg p-2" onClick={()=> editTask(item.id)}>Edit</button>
+                <button className="mr-4 p-2 bg-red-400 hover:text-indigo-500 rounded-lg drop-shadow-lg" onClick={() => deleteTask(item.id)}>Delete</button>
+                <button className="p-2 bg-yellow-500 hover:text-indigo-500 rounded-lg drop-shadow-lg" onClick={() => editTask(item.id)}>Edit</button>
             </div>
-           </li>) 
-
-       })
+        </li>))
     }
-    
-    return (<div className = "bg-indigo-400 h-screen flex flex-col items-center p-8">
-        <div className="flex items-center mb-4">
-            <img className="rounded-full mr-4" src={avatar_url} width="80" />
-            <h1 className="text-2xl text-indigo-10 drop-shawdow-lg" >Todo for {login}</h1>
-        </div>
-        
-            <div className="block m-3 ">
-                <input className="drop-shawdow-lg p-2" type="text" name="name" onChange={(e) => setName(e.target.value)} />
-                <button className="drop-shawdow-lg bg-green-300 hover:text-purple-600 hover:bg-green-100 text-indigo-10 p-2" onClick={add} >Add</button> {name}
+
+    return (<div className="h-screen bg-pink-300 border-2 flex flex-col items-center">
+        <h1 className="flex justify-center m-8 text-indigo-800 text-4xl drop-shadow-lg">
+            <img src={avatar_url} width="80" />
+            <div className="flex flex-row ml-3 pt-5 justify-center text-indigo-800 text-3xl drop-shadow-lg">
+                Todo for
+                <span className="flex flex-row justify-center ml-2"> {login} </span>
             </div>
-        <ul className="flex flex-wrap" >{ renderTasks() }</ul> 
-        </div>   
-    )
+        </h1>
 
- }
+        <div className="flex w-2/3 justify-center mb-8">
+            <input className="w-1/3 rounded-lg pl-2 ml-2 mr-4" type="text" name="task" onChange={e => setName(e.target.value)} />
+            <button className="bg-green-600 text-indigo-200 hover:text-indigo-500 p-2 rounded-lg" onClick={addTask}>Add</button>
+        </div>
 
- Todo.getInitialProps = async (ctx) => {
-    const res = await fetch('https://api.github.com/users/wwarodom')
+        <ul className="flex flex-wrap mb-8">
+            {renderTask()}
+        </ul>
+    </div>)
+}
+Todo.getInitialProps = async (ctx) => {
+    const res = await fetch('https://api.github.com/users/Iamok-cs')
     const json = await res.json()
     return { login: json.login, avatar_url: json.avatar_url }
- }
-   
- export default Todo
+}
+
+export default Todo;
 
      /** 
      * .map เป็นการวนลูป element ตามลำดับของฟังก์ชัน tasks เหมือนกับ for loop 
