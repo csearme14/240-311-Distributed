@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Todo = () => {
+const Todo = ( {avatar_url, login} ) => {
     //tasks คือตังแปร ซึ่งมี name เป็น State
     const initTasks = [
         { id: 1, name: "Read a book"}, /**element1 = item */
@@ -42,31 +42,46 @@ const Todo = () => {
 
     const renderTasks = () =>{
        return tasks.map( (item, index)=> {
-           return (<li key={index}>
-            {item.id}
+           return (<li className="relative mr-4 border-2 border-dashed p-8" key={index}>
+            <div className="text-3xl text-indigo-200 drop-shawdow-lg">
+            <div className="absolute text-xl mr-2 bottom-0 right-0">{item.id}</div>
             {
                 (idEdit !== item.id)? item.name :
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             }
+            </div>
 
-           <button onClick={()=> del(item.id)}>Delete</button>
-           <button onClick={()=> editTask(item.id)}>Edit</button>
+            <div className="mt-8 flex justify-center">
+                <button className="drop-shawdow-lg mr-4 bg-red-200 hover:text-red-600 hover:bg-red-100 rounded-lg p-2" onClick={()=> del(item.id)}>Delete</button>
+                <button className="drop-shawdow-lg mr-4 bg-yellow-200 hover:text-orange-600 hover:bg-yellow-100 rounded-lg p-2" onClick={()=> editTask(item.id)}>Edit</button>
+            </div>
            </li>) 
 
        })
     }
     
-    return (
-        <>
-        <h1>Todo</h1>
-        <input type="text" name="name" onChange={(e) => setName(e.target.value)} />
-        <button onClick={add} >Add</button> {name}
-        <ul>{ renderTasks() }</ul> 
-        </>   
+    return (<div className = "bg-indigo-400 h-screen flex flex-col items-center p-8">
+        <div className="flex items-center mb-4">
+            <img className="rounded-full mr-4" src={avatar_url} width="80" />
+            <h1 className="text-2xl text-indigo-10 drop-shawdow-lg" >Todo for {login}</h1>
+        </div>
+        
+            <div className="block m-3 ">
+                <input className="drop-shawdow-lg p-2" type="text" name="name" onChange={(e) => setName(e.target.value)} />
+                <button className="drop-shawdow-lg bg-green-300 hover:text-purple-600 hover:bg-green-100 text-indigo-10 p-2" onClick={add} >Add</button> {name}
+            </div>
+        <ul className="flex flex-wrap" >{ renderTasks() }</ul> 
+        </div>   
     )
 
  }
-  
+
+ Todo.getInitialProps = async (ctx) => {
+    const res = await fetch('https://api.github.com/users/wwarodom')
+    const json = await res.json()
+    return { login: json.login, avatar_url: json.avatar_url }
+ }
+   
  export default Todo
 
      /** 
@@ -91,5 +106,9 @@ const Todo = () => {
      *     onChange={ foo =>console.log(foo)} />            ในตัวแปรนั้นจะมี object รวมกันเยอะๆ แต่เราสามารถเรียกใช้แค่บางอย่างได้ 
      *                                                      เช่น (e) = ตัวแปร โดยกำหนดให้อ่านข้อมูลผ่าน e.target.value 
      *  ------------------------------------------------------------------------------------------------------------------
-     *                                
+     *  Checkpoint  
+     *  add tasks < 10 
+     *  tasks = ไม่พิมพ์อะไรเลย ต้อง add ไม่ได้
+     *  ถ้ามีการลบ tasks เลขลำดับต้องเรียง
+     *  ลบ tasks ทั้งหมดต้องไม่พัง
     */
