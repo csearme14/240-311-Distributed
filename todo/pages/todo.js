@@ -85,7 +85,7 @@ const Todo = ( {avatar_url, login} ) => {
         if (name == "                                 ")
             return alert("กรุณากรอกข้อมูล");
         if (tasks.length == 0)
-            setTasks([{ id: 1, name }]);
+            return setTasks([{ id: 1, name }]);
         if (tasks.length >= 10)
             return alert("ข้อมูลเกิน 10 ครั้ง");
         else
